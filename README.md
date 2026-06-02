@@ -14,44 +14,50 @@ data integrity and smooth concurrency management.
 2.1 Prerequisites:
 Before running the application, ensure you have the following installed:
 
-    Java: Version 22.0.1.
-    Node.js: Version 22.12.0
-    Angular: Version 19.0.4
-    IDE: Intellij IDEA
-    Maven for Java projects.
-    Angular CLI: if using a web based froetend.
-    GSON for configuration management.
+    Java: 21 (LTS). (Required by pom.xml)
+    Maven: 3.9+ (or use the included Maven wrapper ./mvnw)
+    Optional for Spring Boot API mode: MySQL running locally (see src/main/resources/application.properties)
 
-2.2 How to Build and Run the Application
-Backend(SpringBoot)
+2.2 Build and Run the Application
 
-    2.2.1 Navigate to the backend directoy
-    "cd path-to-your-backend-project".
-    2.2.2 Build the project
-    "mvn clean install".
-    2.2.3 Run the Spring Boot Application
-    "mvn spring-boot:run".
-    The backend server will start at:
-    "http://localhost:8080"
+    2.2.1 Navigate to the project directory:
+    cd /path/to/Real-Time-Event-Ticketing-System
 
-Frontend (Angular)
+    2.2.2 If using Maven wrapper, make it executable once:
+    chmod +x mvnw
 
-    2.2.4 Navigate to the Frontend Directory:
-    "cd path-to-your-angular-project".
-    2.2.5 Install Dependencies:
-    "npm install".
-    2.2.6 Run the Angular Development Server:
-    "ng serve".
-    The frontend will be accessible at:
-    "http://localhost:4200"
+    2.2.3 Build and run tests:
+    ./mvnw clean test
+    (or: mvn clean test)
+
+2.3 Run Modes
+
+Spring Boot API mode:
+
+    ./mvnw spring-boot:run
+    (or: mvn spring-boot:run)
+
+    API runs at:
+    http://localhost:8080
+
+CLI simulation mode:
+
+    ./mvnw -DskipTests compile
+    java -cp target/classes CLI.Main
+
+Note:
+This repository does not contain an Angular frontend project.
 
 
 3. USAGE INSTRUCTIONS
 
 How to Configure and Start the System
 
-3.1 Open the application in your browser at:
-http://localhost:4200
+3.1 For CLI mode, run:
+java -cp target/classes CLI.Main
+
+For API mode, start Spring Boot and call endpoints on:
+http://localhost:8080
 
 3.2 Configure the System:
 
@@ -101,4 +107,3 @@ Maximum Ticket Capacity: Maximum tickets a customer can hold in the ticketpool.
 Number of Vendors: Number of vendors  to release tickets.
 
 Number of Customers: Number of customers to buy tickets.
-
