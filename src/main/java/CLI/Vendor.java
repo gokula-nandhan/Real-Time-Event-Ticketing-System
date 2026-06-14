@@ -12,9 +12,9 @@ public class Vendor implements Runnable {
     private volatile boolean running = true;
 
 
-    public Vendor(Configuration totalTickets, Configuration ticketReleaseRate, TicketPool ticketPool) {
-        this.totalTickets = totalTickets.getTotalTicket();
-        this.ticketReleaseRate = ticketReleaseRate.getTicketReleaseRate();
+    public Vendor(int totalTickets, int ticketReleaseRate, TicketPool ticketPool) {
+        this.totalTickets = totalTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
         this.ticketPool = ticketPool;
     }
 
