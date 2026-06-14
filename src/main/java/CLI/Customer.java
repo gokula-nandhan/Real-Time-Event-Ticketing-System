@@ -10,9 +10,9 @@ public class Customer implements Runnable {
     private volatile boolean running = true;
 
 
-    public Customer(int customerTicketQuantity, Configuration customerRetrievalRate, TicketPool ticketPool) {
+    public Customer(int customerTicketQuantity, int customerRetrievalRate, TicketPool ticketPool) {
         this.customerTicketQuantity = customerTicketQuantity;
-        this.customerRetrievalRate = customerRetrievalRate.getCustomerRetrievalRate();
+        this.customerRetrievalRate = customerRetrievalRate;
         this.ticketPool = ticketPool;
     }
 
