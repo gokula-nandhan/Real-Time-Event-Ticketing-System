@@ -1,4 +1,4 @@
-package coursework.oop.RealTimeEventTicketingSystem.model;
+package backend.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class TicketPool {
-    static List<Ticket> ticketPool;
+    private List<Ticket> ticketPool;
     private int maximumCapacity;
+    private int totalSold = 0;
+    private int totalAdded = 0;
 
     public TicketPool(Configuration configMaxCapacity) {
         this.maximumCapacity = configMaxCapacity.getMaxTicketCapacity();
@@ -23,7 +25,13 @@ public class TicketPool {
         return maximumCapacity - ticketPool.size();
     }
 
+    public int getTotalSold() {
+        return totalSold;
+    }
 
+    public int getTotalAdded() {
+        return totalAdded;
+    }
 
     public synchronized void addTicket(Ticket ticket){
         while(ticketPool.size() >= maximumCapacity){
@@ -32,11 +40,15 @@ public class TicketPool {
                 wait();
             }catch(InterruptedException e){
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e.getMessage(), e);
+                break;
             }
 
         }
+        if (Thread.currentThread().isInterrupted()) {
+            return;
+        }
         ticketPool.add(ticket);
+        totalAdded++;
         notifyAll();
         System.out.println("\nTicket released by vendor successfully!");
         System.out.println("Ticket released by " +Thread.currentThread().getName());
@@ -51,12 +63,16 @@ public class TicketPool {
                 wait();
             }catch(InterruptedException e){
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e.getMessage(), e);
+                break;
             }
+        }
+        if (Thread.currentThread().isInterrupted()) {
+            return null;
         }
 
         Ticket ticket = ticketPool.remove(0);
         ticket.setPurchasedDateTime(LocalDateTime.now());
+        totalSold++;
         notifyAll();
         System.out.println("\nTicket purchased by customer successfully!");
         System.out.println("Ticket purchased by " +Thread.currentThread().getName());

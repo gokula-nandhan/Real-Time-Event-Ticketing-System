@@ -1,4 +1,4 @@
-package coursework.oop.RealTimeEventTicketingSystem.model;
+package backend.model;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,6 +12,7 @@ public class Configuration {
     private int maxTicketCapacity;
     private int vendorCount;
     private int customerCount;
+    private int customerTicketQuantity;
 
 
     public Configuration() {}
@@ -62,6 +63,14 @@ public class Configuration {
 
     public int getCustomerCount() {
         return customerCount;
+    }
+
+    public int getCustomerTicketQuantity() {
+        return customerTicketQuantity;
+    }
+
+    public void setCustomerTicketQuantity(int customerTicketQuantity) {
+        this.customerTicketQuantity = customerTicketQuantity;
     }
 
 

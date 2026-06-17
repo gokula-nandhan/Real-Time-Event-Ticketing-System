@@ -1,27 +1,22 @@
-package coursework.oop.RealTimeEventTicketingSystem.controller;
+package backend.controller;
 
-import coursework.oop.RealTimeEventTicketingSystem.model.Configuration;
-import coursework.oop.RealTimeEventTicketingSystem.model.SimulationStatus;
-import coursework.oop.RealTimeEventTicketingSystem.service.SimulationService;
+import backend.model.Configuration;
+import backend.model.SimulationStatus;
+import backend.service.SimulationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @RestController
 @RequestMapping("/simulation")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 
 public class SimulationController {
 
     @Autowired
     private SimulationService simulationService;
-
-    @Autowired
-    private ApplicationContext context;
 
 
 
@@ -38,13 +33,18 @@ public class SimulationController {
 
     @PostMapping("/stop")
     public String stopSimulation() {
-        SpringApplication.exit(context, () -> 0);
         return simulationService.stopSimulation();
     }
 
     @GetMapping("/status")
     public SimulationStatus getSimulationStatus() {
         return simulationService.getSimulationStatus();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
+    public String handleValidationError(IllegalArgumentException e) {
+        return e.getMessage();
     }
 }
 

@@ -1,4 +1,4 @@
-package coursework.oop.RealTimeEventTicketingSystem;
+package backend;
 
 
 
@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 
-@SpringBootApplication(scanBasePackages = "coursework.oop.RealTimeEventTicketingSystem")
+@SpringBootApplication(scanBasePackages = "backend")
 public class RealTimeEventTicketingSystemApplication{
 
 	public static void main(String[] args) {

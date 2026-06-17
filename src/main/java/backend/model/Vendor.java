@@ -1,4 +1,4 @@
-package coursework.oop.RealTimeEventTicketingSystem.model;
+package backend.model;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,9 +12,9 @@ public class Vendor implements Runnable {
 
 
 
-    public Vendor(Configuration totalTickets, Configuration ticketReleaseRate, TicketPool ticketPool) {
-        this.totalTickets = totalTickets.getTotalTickets();
-        this.ticketReleaseRate = ticketReleaseRate.getTicketReleaseRate();
+    public Vendor(int totalTickets, int ticketReleaseRate, TicketPool ticketPool) {
+        this.totalTickets = totalTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
         this.ticketPool = ticketPool;
     }
 

@@ -1,4 +1,4 @@
-package coursework.oop.RealTimeEventTicketingSystem.model;
+package backend.model;
 
 
 
