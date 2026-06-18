@@ -1,19 +1,23 @@
 package backend.model;
 
+import backend.repository.TicketTransactionRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class TicketPool {
     private List<Ticket> ticketPool;
     private int maximumCapacity;
     private int totalSold = 0;
     private int totalAdded = 0;
+    private TicketTransactionRepository transactionRepository;
 
-    public TicketPool(Configuration configMaxCapacity) {
+    public TicketPool(Configuration configMaxCapacity, TicketTransactionRepository transactionRepository) {
         this.maximumCapacity = configMaxCapacity.getMaxTicketCapacity();
         this.ticketPool = Collections.synchronizedList(new ArrayList<>());
+        this.transactionRepository = transactionRepository;
     }
 
 
@@ -73,6 +77,19 @@ public class TicketPool {
         Ticket ticket = ticketPool.remove(0);
         ticket.setPurchasedDateTime(LocalDateTime.now());
         totalSold++;
+        if (transactionRepository != null) {
+            TicketTransaction tx = new TicketTransaction();
+            tx.setTransactionId(UUID.randomUUID().toString());
+            tx.setTicketId(ticket.getTicketID());
+            tx.setEventName(ticket.getEventName());
+            tx.setTicketPrice(ticket.getTicketPrice());
+            tx.setVendorName("Vendor");
+            tx.setCustomerName(Thread.currentThread().getName());
+            tx.setReleasedAt(ticket.getReleasedDateTime());
+            tx.setPurchasedAt(ticket.getPurchasedDateTime());
+            tx.setCreatedAt(LocalDateTime.now());
+            transactionRepository.save(tx);
+        }
         notifyAll();
         System.out.println("\nTicket purchased by customer successfully!");
         System.out.println("Ticket purchased by " +Thread.currentThread().getName());
